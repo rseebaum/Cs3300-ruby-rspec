@@ -31,20 +31,21 @@ def sum_to_n? arr, n
   elsif arr.length == 1 #returns zero when single element
     return false
   else
-    len = arr.length - 1
+    len = arr.length - 1 #zero-based index, so we go until length-1
     first = 0
-    while first != len - 1
-      second = first + 1
-      while(second != len)
-        if arr[first]+arr[second] == n
+    while (first != len - 1) # iterates until first gets to second to last value
+      second = first + 1 #value will be the next element from first
+      while(second != len) #second will get to very last value
+        if arr[first]+arr[second] == n #returns true if sum equals n
           return true
         else
-          second = second + 1
+          second = second + 1 #otherwise second and first get incremented
         end
       end
       first = first + 1
     end
   end
+  return false #returns false otherwise
 end
 
 # Part 2
@@ -56,21 +57,21 @@ def hello(name)
 end
 
 def starts_with_consonant? s
-  if s.empty?
+  if s.empty? #returns false if empty
     return false
-  elsif s.match(/[[:alpha:]]/)
+  elsif !s.start_with?(/[[:alpha:]]/) #returns false if it doesn't start with a letter
     return false
   else
-    str = "AEIOUaeiou"
+    str = "AEIOUaeiou" #string of vowels
     str = str.chars
     len = str.length - 1
-    while len != 0
+    while len != 0 #while loop to check if string starts with any letter in the str string
      if s.start_with?(str[len])
-       return false
+       return false #returns false if it finds a match
      end
-     len = len - 1
+     len = len - 1 #otherwise iterates and checks next letter in string
    end
-   return true
+   return true #returns true if it passes through the entire string
   end
 end
 
@@ -81,5 +82,13 @@ end
 # Part 3
 
 class BookInStock
-# YOUR CODE HERE
+  attr_accessor :isbn, :price #creating attributes
+  def initialize (isbn, price)
+    raise ArgumentError if price <= 0 || isbn.empty? #checking if price is negative or isbn is empty
+    @isbn, @price = isbn, price #initializing attributes
+  end
+
+  def price_as_string
+    format("$%.2f", @price) #formats the string as a float to 2 decimal places
+  end
 end
